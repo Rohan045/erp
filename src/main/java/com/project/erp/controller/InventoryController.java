@@ -8,6 +8,7 @@ import com.project.erp.service.InventoryService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
@@ -19,6 +20,7 @@ public class InventoryController {
     @Autowired
     InventoryService inventoryService;
 
+    @PreAuthorize("hasAnyRole('WAREHOUSE_MANAGER','ADMIN')")
     @PostMapping("post")
     public ResponseEntity<Inventory> addInventory(@RequestBody @Valid InventoryDto inventoryDto) throws Exception {
         inventoryService.addInventory(inventoryDto);
@@ -30,6 +32,7 @@ public class InventoryController {
         throw new Exception("Inventory was not saved in db");
     }
 
+    @PreAuthorize("hasAnyRole('WAREHOUSE_MANAGER','ADMIN')")
     @PutMapping("update")
     public ResponseEntity<Inventory> updateInventory(@RequestBody @Valid InventoryDto inventoryDto) throws Exception {
         inventoryService.updateInventory(inventoryDto);

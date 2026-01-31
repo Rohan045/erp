@@ -4,6 +4,7 @@ import com.project.erp.model.Location;
 import com.project.erp.service.LocationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
@@ -16,6 +17,7 @@ public class LocationController {
     @Autowired
     LocationService locationService;
 
+    @PreAuthorize("hasAnyRole('WAREHOUSE_MANAGER','ADMIN')")
     @PostMapping("post")
     public ResponseEntity<Location> addLocation(@RequestBody Location location){
         locationService.addLocation(location);

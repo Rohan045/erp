@@ -6,6 +6,7 @@ import com.project.erp.service.SalesOrderService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
@@ -19,6 +20,7 @@ public class SalesOrderController {
     @Autowired
     SalesOrderService salesOrderService;
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("post")
     public ResponseEntity<SalesHeader> addSalesOrder(@RequestBody @Valid SalesOrderDto salesOrderDto) throws Exception {
         UUID id = salesOrderService.addSalesOrder(salesOrderDto);

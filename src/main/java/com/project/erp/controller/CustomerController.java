@@ -4,6 +4,7 @@ import com.project.erp.model.Customer;
 import com.project.erp.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
@@ -16,6 +17,7 @@ public class CustomerController {
     @Autowired
     CustomerService customerService;
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("post")
     public ResponseEntity<Customer>  postCustomer(@RequestBody Customer customer){
         customerService.addCustomer(customer);
